@@ -87,7 +87,7 @@ class FasterDetection(rh.detection.Detection):
 
     def build_cluster_agglomerative(self, d, j):
         """
-        This method builds clusters.
+        This method builds clusters using agglomerative clustering.
         """
 
         feature_vectors = d.column_features[j]
@@ -113,7 +113,7 @@ class FasterDetection(rh.detection.Detection):
 
     def build_cluster_agglomerative_fastcluster(self, d, j):
         """
-        This method builds clusters.
+        This method builds clusters using agglomerative clustering.
         """
 
         feature_vectors = d.column_features[j]
@@ -163,6 +163,9 @@ class FasterDetection(rh.detection.Detection):
 
 
     def build_cluster_hdbscan(self, d, j):
+        """
+        This method builds clusters using hdbscan.
+        """
         feature_vectors = d.column_features[j]
         clusters_k_c_ce = {k: {} for k in range(2, self.LABELING_BUDGET + 2)}
         cells_clusters_k_ce = {k: {} for k in range(2, self.LABELING_BUDGET + 2)}
@@ -188,7 +191,9 @@ class FasterDetection(rh.detection.Detection):
         return [clusters_k_c_ce, cells_clusters_k_ce]
 
     def get_Centroids(feature_vector, n_clusters, column_strategys,random_state=0):
-
+        """
+        This method generates cluster centers for k-means and mini-batch k-means.
+        """
         ####Generating synthetic feature-vector####
         frame = pd.DataFrame(feature_vector)
         start = None
@@ -251,6 +256,9 @@ class FasterDetection(rh.detection.Detection):
         return numpy.array(centroids)
 
     def build_cluster_kmeans(self, d, j):
+        """
+        This method builds clusters using k-means.
+        """
         feature_vectors = d.column_features[j]
         clusters_k_c_ce = {k: {} for k in range(2, self.LABELING_BUDGET + 2)}
         cells_clusters_k_ce = {k: {} for k in range(2, self.LABELING_BUDGET + 2)}
@@ -313,6 +321,9 @@ class FasterDetection(rh.detection.Detection):
         return [clusters_k_c_ce, cells_clusters_k_ce]
 
     def build_cluster_mbatch(self, d, j):
+        """
+        This method builds clusters using mini-batch k-means.
+        """
         feature_vectors = d.column_features[j]
         clusters_k_c_ce = {k: {} for k in range(2, self.LABELING_BUDGET + 2)}
         cells_clusters_k_ce = {k: {} for k in range(2, self.LABELING_BUDGET + 2)}
@@ -366,6 +377,9 @@ class FasterDetection(rh.detection.Detection):
         return [clusters_k_c_ce, cells_clusters_k_ce]
 
     def build_cluster_kmodes(self, d, j):
+        """
+        This method builds clusters using k-modes.
+        """
         feature_vectors = d.column_features[j]
         clusters_k_c_ce = {k: {} for k in range(2, self.LABELING_BUDGET + 2)}
         cells_clusters_k_ce = {k: {} for k in range(2, self.LABELING_BUDGET + 2)}
@@ -396,6 +410,9 @@ class FasterDetection(rh.detection.Detection):
         return [clusters_k_c_ce, cells_clusters_k_ce]
     
     def build_cluster_parc(self, d, j):
+        """
+        This method builds clusters using parc.
+        """
         feature_vectors = d.column_features[j]
         clusters_k_c_ce = {k: {} for k in range(2, self.LABELING_BUDGET + 2)}
         cells_clusters_k_ce = {k: {} for k in range(2, self.LABELING_BUDGET + 2)}
@@ -423,6 +440,9 @@ class FasterDetection(rh.detection.Detection):
         return [clusters_k_c_ce, cells_clusters_k_ce]
 
     def build_cluster_birch(self, d, j):
+        """
+        This method builds clusters using birch and kmeans.
+        """
         feature_vectors = d.column_features[j]
         clusters_k_c_ce = {k: {} for k in range(2, self.LABELING_BUDGET + 2)}
         cells_clusters_k_ce = {k: {} for k in range(2, self.LABELING_BUDGET + 2)}
@@ -474,7 +494,9 @@ class FasterDetection(rh.detection.Detection):
         return [clusters_k_c_ce, cells_clusters_k_ce]
 
     def build_clusters_in_parallel(self, d):
-        
+        """
+        This method parallelized the clustering of the dataset columns.
+        """
         algorithm = self.CLUSTER_ALGORITHM
         if(algorithm == self.algorithms[0]):
 
