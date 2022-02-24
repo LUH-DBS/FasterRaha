@@ -331,6 +331,8 @@ class FasterDetection(rh.detection.Detection):
                 
             data = feature_vectors
             weighs = numpy.ones(len(feature_vectors))
+
+            # deduplication
             if(self.FEATUREREDUCTION):
                 reduced_feature_vectors = pd.DataFrame(feature_vectors)
                 weighs = reduced_feature_vectors.value_counts(sort=False, normalize=True).to_list()
@@ -352,6 +354,7 @@ class FasterDetection(rh.detection.Detection):
             clustering_model = sl.cluster.MiniBatchKMeans(n_clusters=nclus, init=FasterDetection.get_Centroids(data,nclus, d.NAME_INDEX[j]), max_iter=10000, batch_size=1024, max_no_improvement=10, init_size=int(len(data)* self.MBATCH_SIZE), n_init = 1)
             model_labels = clustering_model.fit(data, sample_weight=weighs).labels_
 
+            #reduplication
             if(self.FEATUREREDUCTION):
                 #model_labels = clustering_model.predict(feature_vectors)
                 label_dict = {}
@@ -660,7 +663,7 @@ if __name__ == "__main__":
     app.LABELING_BUDGET = 20
     app.FEATUREREDUCTION = False
     app.N_JOBS = 1
-    app.CLUSTER_ALGORITHM = 'agglomerative_single'
+    app.CLUSTER_ALGORITHM = 'kmeans'
     
     detection_dictionary = app.run(dataset_dictionary)
     
